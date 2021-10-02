@@ -1,14 +1,30 @@
 package com.company;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Store {
     private ArrayList<Order> orders;
     private ArrayList<Customer> customers;
 
+
     public static void main(String[] args) {
     }
+
+    public ArrayList<Customer> getCustomers()throws IOException {
+        var fileName = "Customer";
+        var filePath = Paths.get(fileName);
+        var allLines = Files.readAllLines(filePath);
+        for (var line : allLines) {
+            var splitLine = line.split(",");
+            customers.add(splitLine[0]);
+        }
+    }
+
     public void runStore(){
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println(" [1] Add Customer");
@@ -36,10 +52,34 @@ public class Store {
     public void Store(){
     }
     public void addCustomer(){
-    }
-    public Customer selectCustomer(){
-    }
-    public void manageCustomer(Customer selectedCustomer){
+        var inputReader = new Scanner(System.in);
+            System.out.println("What is the name of the Customer?: ");
+        var custName = inputReader.nextLine();
+
 
     }
-}
+    public Optional<Customer> selectCustomer(Scanner reader){
+        System.out.println("What");
+    }
+    public void manageCustomer(Customer selectedCustomer){
+        var menuReader = new Scanner(System.in);
+        System.out.println("**************************");
+        System.out.println(" [1] Add Address");
+        System.out.println(" [2] Make Order");
+        System.out.println(" [3] Back");
+        System.out.println("**************************");
+        while(true){
+            var custChoice = menuReader.nextInt();
+            switch (custChoice){
+                case 1:
+
+                case 2:
+
+                case 3:
+                    runStore();
+                    break;
+            }
+        }
+
+    }
+    }
