@@ -10,36 +10,52 @@ import java.util.Scanner;
 public class Store {
     private ArrayList<Order> orders;
     private ArrayList<Customer> customers;
-
-
-    public static void main(String[] args) {
+    public Store() {
+        customers = new ArrayList<Customer>();
+        orders = new ArrayList<Order>();
     }
 
-    public ArrayList<Customer> getCustomers()throws IOException {
+    public static void main(String[] args) {
+        Store nicks = new Store() ;
+        nicks.runStore();
+    }
+
+
+    public void getCustomers()throws IOException {
         var fileName = "Customer";
         var filePath = Paths.get(fileName);
         var allLines = Files.readAllLines(filePath);
-        for (var line : allLines) {
-            var splitLine = line.split(",");
-            customers.add(splitLine[0]);
+        var splitLine = allLines.get(0).split(", ");
+        for (var name : splitLine) {
+            Customer customer = new Customer(name);
+            customers.add(customer);
         }
     }
 
     public void runStore(){
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println(" [1] Add Customer");
-        System.out.println(" [2] Select Customer");
-        System.out.println(" [3] Quit");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        try {
+            getCustomers();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         var menuReader = new Scanner(System.in);
         while(true){
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(" [1] Add Customer");
+            System.out.println(" [2] Select Customer");
+            System.out.println(" [3] Quit");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             var userChoice= menuReader.nextInt();
             switch (userChoice){
                 case 1:
                     addCustomer();
                     break;
                 case 2:
-                    selectCustomer();
+                    Optional<Customer> current = selectCustomer(menuReader);
+                    if(current.isPresent())
+                        manageCustomer(menuReader, current.get());
+                    else
+                        System.out.println("No customer with that ID found");
                     break;
                 case 3:
                     System.exit(0);
@@ -47,22 +63,33 @@ public class Store {
         }
 
     }
+
+
     public void makeOrder(ShippingAddress address, Customer cust){
     }
-    public void Store(){
-    }
+
     public void addCustomer(){
         var inputReader = new Scanner(System.in);
             System.out.println("What is the name of the Customer?: ");
-        var custName = inputReader.nextLine();
+         var custName = inputReader.nextLine();
+        Customer customer = new Customer(custName);
+        customers.add(customer);
+        System.out.println(custName + " has been added to customers with ID " + customer.getId());
+
 
 
     }
     public Optional<Customer> selectCustomer(Scanner reader){
-        System.out.println("What");
+        System.out.println("Input Customer ID: ");
+        var idToFind = reader.nextInt();
+        for (var currentCustomer: customers){
+            if(currentCustomer.getId() == idToFind)
+                return Optional.of(currentCustomer);
+        }
+        return Optional.empty();
     }
-    public void manageCustomer(Customer selectedCustomer){
-        var menuReader = new Scanner(System.in);
+    public void manageCustomer(Scanner menuReader ,Customer currentCustomer){
+        System.out.println("Current client is: "+ currentCustomer.getName());
         System.out.println("**************************");
         System.out.println(" [1] Add Address");
         System.out.println(" [2] Make Order");
@@ -72,6 +99,12 @@ public class Store {
             var custChoice = menuReader.nextInt();
             switch (custChoice){
                 case 1:
+                    //print out question address 1
+                    // String address 1 = menuReader.nextString
+                    //use menuReader to extract answer into variable
+                    // address 2 and so on
+                    //
+                    currentCustomer.addAddress(new ShippingAddress());
 
                 case 2:
 

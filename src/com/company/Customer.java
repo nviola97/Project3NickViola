@@ -5,11 +5,16 @@ import java.util.ArrayList;
 public class Customer {
     private ArrayList<ShippingAddress> addresses;
     private String name;
-    private static int customerID = 0;
+    private  int customerID;
+    private static int nextID = 100;
 
     public Customer(String name) {
         this.name = name;
-        this.customerID += 1;
+        customerID = nextID;
+        nextID++;
+    }
+    public int getId(){
+        return customerID;
     }
 
 
