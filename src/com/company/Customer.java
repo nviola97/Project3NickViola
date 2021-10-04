@@ -9,6 +9,7 @@ public class Customer {
     private static int nextID = 100;
 
     public Customer(String name) {
+        addresses = new ArrayList<ShippingAddress>();
         this.name = name;
         customerID = nextID;
         nextID++;
@@ -17,6 +18,9 @@ public class Customer {
         return customerID;
     }
 
+    public ArrayList<ShippingAddress> getAddresses() {
+        return addresses;
+    }
 
     public String getName() {
         return name;

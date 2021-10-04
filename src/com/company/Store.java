@@ -66,6 +66,9 @@ public class Store {
 
 
     public void makeOrder(ShippingAddress address, Customer cust){
+        Order custOrder = new Order(address, cust);
+        orders.add(custOrder);
+        System.out.println("Your order has been placed");
     }
 
     public void addCustomer(){
@@ -89,25 +92,40 @@ public class Store {
         return Optional.empty();
     }
     public void manageCustomer(Scanner menuReader ,Customer currentCustomer){
-        System.out.println("Current client is: "+ currentCustomer.getName());
-        System.out.println("**************************");
-        System.out.println(" [1] Add Address");
-        System.out.println(" [2] Make Order");
-        System.out.println(" [3] Back");
-        System.out.println("**************************");
         while(true){
+            System.out.println("Current client is: "+ currentCustomer.getName());
+            System.out.println("**************************");
+            System.out.println(" [1] Add Address");
+            System.out.println(" [2] Make Order");
+            System.out.println(" [3] Back");
+            System.out.println("**************************");
             var custChoice = menuReader.nextInt();
             switch (custChoice){
                 case 1:
-                    //print out question address 1
-                    // String address 1 = menuReader.nextString
-                    //use menuReader to extract answer into variable
-                    // address 2 and so on
-                    //
-                    currentCustomer.addAddress(new ShippingAddress());
-
+                    System.out.println("Enter the Address 1: ");
+                    menuReader.nextLine();
+                    String address1 = menuReader.nextLine();
+                    System.out.println("Enter the Address 2: ");
+                    String address2 = menuReader.nextLine();
+                    System.out.println("Enter the State: ");
+                    String state = menuReader.nextLine();
+                    System.out.println("Enter the City: ");
+                    String city = menuReader.nextLine();
+                    System.out.println("Enter the Zip Code: ");
+                    String zipCode = menuReader.nextLine();
+                    var newAddress = new ShippingAddress( address1, address2, state, city, zipCode);
+                    currentCustomer.addAddress(newAddress);
+                    System.out.println(newAddress.toString() + " has been added.");
+                    break;
                 case 2:
-
+                    System.out.println("Choose and address");
+                    System.out.println("############################");
+                    for(int i = 0; i< currentCustomer.getAddresses().size(); i++){
+                        System.out.println("[" + i +"]  " + currentCustomer.getAddresses().get(i));
+                    }
+                    System.out.println("############################");
+                    makeOrder(currentCustomer.getAddresses().get(menuReader.nextInt()), currentCustomer);
+                    break;
                 case 3:
                     runStore();
                     break;

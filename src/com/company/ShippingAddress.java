@@ -17,6 +17,6 @@ public class ShippingAddress {
         this.zipCode = zipCode;
     }
     public String toString(){
-        return "Shipping address is: "+ address1 + " "+ address2 + " "+ state + " "+ city + " " + zipCode;
+        return "Shipping address: "+ address1 + " "+ address2 + " "+ state + " "+ city + " " + zipCode;
     }
 }
