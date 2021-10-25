@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.ArrayList;
 
-public class Customer {
+public abstract class Customer {
     private ArrayList<ShippingAddress> addresses;
     private String name;
     private  int customerID;
@@ -20,6 +20,15 @@ public class Customer {
 
     public ArrayList<ShippingAddress> getAddresses() {
         return addresses;
+    }
+    public abstract double PayForOrder(ArrayList<ItemsForSale> itemsInOrder);
+
+    public double payOutstandingBalance(){
+        return 0.0;
+    }
+
+    public void arrangeDelivery(){
+        System.out.println(name + " deliver any time");
     }
 
     public String getName() {

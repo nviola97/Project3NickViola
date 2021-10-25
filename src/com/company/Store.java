@@ -10,9 +10,12 @@ import java.util.Scanner;
 public class Store {
     private ArrayList<Order> orders;
     private ArrayList<Customer> customers;
+    private ArrayList<merchandiseItem> stock;
+    private double revenue;
     public Store() {
         customers = new ArrayList<Customer>();
         orders = new ArrayList<Order>();
+        stock = new ArrayList<merchandiseItem>();
     }
 
     public static void main(String[] args) {
