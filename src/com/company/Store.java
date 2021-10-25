@@ -68,8 +68,8 @@ public class Store {
     }
 
 
-    public void makeOrder(ShippingAddress address, Customer cust){
-        Order custOrder = new Order(address, cust);
+    public void makeOrder(ShippingAddress address, Customer cust, ArrayList<merchandiseItem> cart){
+        Order custOrder = new Order(address, cust, cart);
         orders.add(custOrder);
         System.out.println("Your order has been placed");
     }
