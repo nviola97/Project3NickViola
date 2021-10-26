@@ -7,9 +7,8 @@ public class TaxExemptCustomer extends Customer{
         super(name);
     }
 
-    @Override
-    public double PayForOrder(ArrayList<ItemsForSale> itemsInOrder) {
-        return super.PayForOrder(itemsInOrder);
+    public double PayForOrder(ArrayList<merchandiseItem> itemsInOrder) {
+        return PayForOrder(itemsInOrder);
     }
 
     @Override

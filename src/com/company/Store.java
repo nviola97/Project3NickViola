@@ -12,6 +12,7 @@ public class Store {
     private ArrayList<Customer> customers;
     private ArrayList<merchandiseItem> stock;
     private double revenue;
+
     public Store() {
         customers = new ArrayList<Customer>();
         orders = new ArrayList<Order>();
@@ -21,6 +22,32 @@ public class Store {
     public static void main(String[] args) {
         Store nicks = new Store() ;
         nicks.runStore();
+    }
+
+    public void getStock() throws IOException {
+        var fileName = "merchandiseItem";
+        var filePath = Paths.get(fileName);
+        var allLines = Files.readAllLines(filePath);
+        for (var line : allLines) {
+            var splitLine = line.split("; ");
+            var price = Double.parseDouble(splitLine[2]);
+            ItemType type;
+            switch (splitLine[1]){
+                case "Clothing":
+                    type = ItemType.Clothing;
+                case "WICFood":
+                    type =ItemType.WICFood;
+                case "GeneralMerchandise":
+                    type = ItemType.GeneralMerchandise;
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + splitLine[1]);
+            }
+
+            merchandiseItem item = new merchandiseItem(splitLine[0], type, price);
+            stock.add(item);
+
+        }
     }
 
 

@@ -1,9 +1,15 @@
 package com.company;
 
 public class merchandiseItem {
-    private ItemType taxibleType;
+    private ItemType taxableType;
     private String Name;
     private double price;
+
+    public merchandiseItem(String Name,ItemType taxableType, double price){
+        this.taxableType = taxableType;
+        this.Name = Name;
+        this.price = price;
+    }
 
     public String getName() {
         return Name;
@@ -14,6 +20,6 @@ public class merchandiseItem {
     }
 
     public ItemType getType(){
-        return taxibleType;
+        return taxableType;
     }
 }
