@@ -57,7 +57,7 @@ public class Store {
         var allLines = Files.readAllLines(filePath);
         var splitLine = allLines.get(0).split(", ");
         for (var name : splitLine) {
-            Customer customer = new Customer(name);
+            Customer customer = new ResidentialCustomer(name);
             customers.add(customer);
         }
     }
@@ -65,6 +65,7 @@ public class Store {
     public void runStore(){
         try {
             getCustomers();
+            getStock();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,23 +90,59 @@ public class Store {
                     break;
                 case 3:
                     System.exit(0);
+
             }
         }
 
     }
 
 
-    public void makeOrder(ShippingAddress address, Customer cust, ArrayList<merchandiseItem> cart){
+    public void makeOrder(ShippingAddress address, Customer cust) {
+        ArrayList<merchandiseItem> cart = new ArrayList<merchandiseItem>();
+        var menuReader = new Scanner(System.in);
+        while (true) {
+            System.out.println("Choose items to add to cart.");
+            System.out.println("############################");
+            for (int i = 0; i < stock.size(); i++) {
+                System.out.println("[" + (i+1) + "] " + stock.get(i).getName());
+            }
+            System.out.println("[0] Quit");
+            System.out.println("############################");
+            var itemChoice = menuReader.nextInt()-1;
+            if (itemChoice == -1){
+                break;
+            }
+            else{
+                cart.add(stock.get(itemChoice));
+            }
+        }
         Order custOrder = new Order(address, cust, cart);
         orders.add(custOrder);
         System.out.println("Your order has been placed");
     }
-
     public void addCustomer(){
         var inputReader = new Scanner(System.in);
             System.out.println("What is the name of the Customer?: ");
          var custName = inputReader.nextLine();
-        Customer customer = new Customer(custName);
+         System.out.println("Input customer type: ");
+        System.out.println("**************************");
+        System.out.println(" [1] Business");
+        System.out.println(" [2] Residential");
+        System.out.println(" [3] Tax Exempt");
+        System.out.println("**************************");
+        var custType = inputReader.nextInt();
+        Customer customer;
+        switch (custType){
+            case 1:
+                customer = new BusinessCustomer(custName);
+                break;
+            case 3:
+                customer = new TaxExemptCustomer(custName);
+                break;
+            default:
+                customer = new ResidentialCustomer(custName);
+                break;
+        }
         customers.add(customer);
         System.out.println(custName + " has been added to customers with ID " + customer.getId());
 
@@ -148,13 +185,15 @@ public class Store {
                     System.out.println(newAddress.toString() + " has been added.");
                     break;
                 case 2:
-                    System.out.println("Choose and address");
-                    System.out.println("############################");
-                    for(int i = 0; i< currentCustomer.getAddresses().size(); i++){
-                        System.out.println("[" + i +"]  " + currentCustomer.getAddresses().get(i));
+                    if(currentCustomer.getAddresses().size() > 0) {
+                        System.out.println("Choose an address");
+                        System.out.println("############################");
+                        for (int i = 0; i < currentCustomer.getAddresses().size(); i++) {
+                            System.out.println("[" + i + "]  " + currentCustomer.getAddresses().get(i));
+                        }
+                        System.out.println("############################");
+                        makeOrder(currentCustomer.getAddresses().get(menuReader.nextInt()), currentCustomer);
                     }
-                    System.out.println("############################");
-                    makeOrder(currentCustomer.getAddresses().get(menuReader.nextInt()), currentCustomer);
                     break;
                 case 3:
                     runStore();
@@ -163,4 +202,5 @@ public class Store {
         }
 
     }
+
     }

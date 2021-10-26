@@ -8,7 +8,11 @@ public class TaxExemptCustomer extends Customer{
     }
 
     public double PayForOrder(ArrayList<merchandiseItem> itemsInOrder) {
-        return PayForOrder(itemsInOrder);
+        double sum = 0.0;
+        for (var item : itemsInOrder) {
+            sum+= item.getPrice();
+        }
+        return sum;
     }
 
     @Override

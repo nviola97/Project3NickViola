@@ -11,7 +11,6 @@ public class BusinessCustomer extends Customer {
     @Override
     public double PayForOrder(ArrayList<merchandiseItem> itemsInOrder) {
         System.out.println("Thank you " + getName() + " your purchase order will be charged.");
-        purchaseOrderBalance = 0.0;
         for (var item : itemsInOrder) {
             switch (item.getType()) {
                 case GeneralMerchandise:
