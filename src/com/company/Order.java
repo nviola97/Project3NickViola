@@ -9,8 +9,9 @@ public class Order {
 
     public Order(ShippingAddress destination, Customer orderedBy, ArrayList<merchandiseItem> cartForOrder){
         this.destination = destination;
-        this.orderedBy = orderedBy;
         this.cartForOrder = cartForOrder;
+        this.orderedBy = orderedBy;
+
     }
     public String getDestination() {
         return destination.toString();
@@ -18,4 +19,5 @@ public class Order {
     public String getOrderer(){
         return orderedBy.toString();
     }
+    public String getCart(){ return cartForOrder.toString(); }
 }

@@ -74,7 +74,8 @@ public class Store {
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             System.out.println(" [1] Add Customer");
             System.out.println(" [2] Select Customer");
-            System.out.println(" [3] Quit");
+            System.out.println(" [3] Collect Revenue");
+            System.out.println(" [4] Quit");
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             var userChoice= menuReader.nextInt();
             switch (userChoice){
@@ -89,7 +90,14 @@ public class Store {
                         System.out.println("No customer with that ID found");
                     break;
                 case 3:
+                    for(int i = 0; i< orders.size(); i++){
+                        orders.get(i).getOrderer();
+                        // could not figure it out
+                    }
+                    break;
+                case 4:
                     System.exit(0);
+
 
             }
         }
